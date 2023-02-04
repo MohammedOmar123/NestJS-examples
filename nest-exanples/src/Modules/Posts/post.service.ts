@@ -1,8 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 
 @Injectable()
 export class PostServices {
   findAll() {
-    return 'Hello world from post service class';
+    throw new BadRequestException();
+    return { message: 'Hello world from post service' };
   }
 }

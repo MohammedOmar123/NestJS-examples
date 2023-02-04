@@ -12,6 +12,7 @@ import { GuardMiddleware } from '../../core/Middlewares/Guard.middleware';
 @Module({
   controllers: [UserController],
   providers: [UserServices],
+
   // imports: [PostModule],
 }) // implementing NestModule interface in order to implement a middleware
 export class UserModule implements NestModule {
