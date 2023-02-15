@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, CacheModule } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UserModule } from './Modules/Users/user.module';
@@ -7,9 +7,24 @@ import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
 import { HttpExceptionFilter } from './core/HttpExceptionFilter/http-exception.filter';
 import { AllExceptionsFilter } from './core/HttpExceptionFilter/AllExceptions.filter';
 import { TransformInterceptor } from './core/interceptors/transform.interceptor';
+import { SequelizeModule } from '@nestjs/sequelize';
+import { ProjectsModule } from './projects/projects.module';
+import config from './core/database/config/connection';
 
 @Module({
-  imports: [UserModule, PostModule],
+  imports: [
+    UserModule,
+    PostModule,
+    SequelizeModule.forRoot({
+      ...config,
+      synchronize: true,
+      sync: { force: false },
+      autoLoadModels: true,
+      logging: false,
+    }),
+    CacheModule.register({ isGlobal: true }),
+    ProjectsModule,
+  ],
   controllers: [AppController],
   providers: [
     AppService,

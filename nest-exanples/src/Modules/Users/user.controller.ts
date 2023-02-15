@@ -22,4 +22,10 @@ export class UserController {
   getAdmin() {
     return 'this is an admin';
   }
+
+  // this route just to try using cache
+  @Get('cache')
+  getUsers() {
+    this.userServices.findUser();
+  }
 }
